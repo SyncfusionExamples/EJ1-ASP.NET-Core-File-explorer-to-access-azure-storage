@@ -1,0 +1,30 @@
+﻿@using Syncfusion.JavaScript;
+@using Syncfusion.JavaScript.DataVisualization.DiagramEnums;
+@{
+    ViewBag.Title = "FileExplorer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>FileExplorer</h2>
+<div id="ControlRegion">
+    <ej-file-explorer id="file" path="https://filebrowsercontent.blob.core.windows.net/blob1/Content/" ajax-action="@Url.Content("FileActionDefault")" before-download="CancelRequest" before-upload="onBeforeUpload">
+        <e-file-ajax-settings>
+            <e-download url="/FileExplorer/Download{0}"></e-download>
+            <e-upload url="/FileExplorer/Upload{0}"></e-upload>
+        </e-file-ajax-settings>
+    </ej-file-explorer>
+</div>
+
+<script>
+
+// To prevent the page navigation while downloading the files, we have handled the request from new tab.
+    function CancelRequest(args) {
+        var newWindow = window.open(args.path + args.files[0]);                
+        args.cancel = true;
+    }
+
+    function onBeforeUpload(args) {
+        debugger
+        //Pass the additional parameter for server side
+        args.url = args.url + "&Additiondata=hello";
+    }
+</script>
